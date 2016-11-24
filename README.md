@@ -1,6 +1,6 @@
-# YGOPro-Custom-Cards
+ # YGOPro-Custom-Cards
 
-This Will Include All Custom Cards For YGOPro to be used online
+This Will Include All Custom Cards For YGOPro to be used both online and offline.
 
 List Of Cards Is Here 
 
