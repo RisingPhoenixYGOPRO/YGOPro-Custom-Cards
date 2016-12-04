@@ -36,6 +36,12 @@ function c100000775.initial_effect(c)
 	e3:SetOperation(c100000775.activate3)
 	e3:SetCondition(c100000775.descon3)
 	c:RegisterEffect(e3)
+<<<<<<< HEAD
+=======
+		local e4=e3:Clone()
+	e4:SetCode(EVENT_FLIP_SUMMON)
+	c:RegisterEffect(e4)
+>>>>>>> 816f990de8c38dd71afb2066af4fc99c5a65e311
 end
 function c100000775.coffilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x119) and c:IsType(TYPE_MONSTER) 
