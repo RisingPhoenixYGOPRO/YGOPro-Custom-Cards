@@ -1,7 +1,7 @@
 --HN - Yellow Heart
 function c99980460.initial_effect(c)
   --Xyz Summon
-  aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x9998),4,2)
+  aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x998),4,2)
   c:EnableReviveLimit()
   --To Hand
   local e1=Effect.CreateEffect(c)
@@ -72,7 +72,7 @@ function c99980460.dacost(e,tp,eg,ep,ev,re,r,rp,chk)
   e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c99980460.dafilter(c)
-  return c:IsFaceup() and c:IsSetCard(0x9998) and c:IsType(TYPE_XYZ)
+  return c:IsFaceup() and c:IsSetCard(0x998) and c:IsType(TYPE_XYZ)
 end
 function c99980460.datg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
   if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c99980460.dafilter(chkc) end
@@ -95,5 +95,5 @@ function c99980460.atkval(e,c)
 end
 function c99980460.xyzlimit(e,c)
   if not c then return false end
-  return not c:IsSetCard(0x9998)
+  return not c:IsSetCard(0x998)
 end
