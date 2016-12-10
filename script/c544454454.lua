@@ -56,25 +56,15 @@ function c544454454.initial_effect(c)
 	e8:SetTargetRange(LOCATION_MZONE,0)
 	e8:SetTarget(c544454454.antarget)
 	c:RegisterEffect(e8)
-	--spson
-	local e9=Effect.CreateEffect(c)
-	e9:SetType(EFFECT_TYPE_SINGLE)
-	e9:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e9:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e9:SetValue(aux.FALSE)
-	c:RegisterEffect(e9)
 	--disable attack
-	local e10=Effect.CreateEffect(c)
-	e10:SetDescription(aux.Stringid(84013237,0))
-	e10:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e10:SetRange(LOCATION_MZONE)
-	e10:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e10:SetCondition(c544454454.atkcon)
-	e10:SetCost(c544454454.atkcost)
-	e10:SetOperation(c544454454.atkop)
-	c:RegisterEffect(e10)
+	local e9=Effect.CreateEffect(c)
+	e9:SetDescription(aux.Stringid(544454454,0))
+	e9:SetCode(EVENT_BE_BATTLE_TARGET)
+	e9:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e9:SetCost(c544454454.negacost)
+	e9:SetOperation(c544454454.negaop)
+	c:RegisterEffect(e9)
 end
-c544454454.xyz_number=39
 function c544454454.sumlimit(e,c)
 	return c:IsSetCard(0x23)
 end
@@ -108,14 +98,16 @@ end
 function c544454454.antarget(e,c)
 	return c~=e:GetHandler()
 end
-function c544454454.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	return a:IsControler(1-tp) and (a:GetRank()>e:GetHandler():GetLevel() or a:GetLevel()>e:GetHandler():GetLevel())
-end
-function c544454454.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
-end
 function c544454454.atkop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.NegateAttack()
+end
+function c544454454.negacostfilter(c)
+	return c:IsSetCard(0x23) and c:IsDiscardable()
+end
+function c544454454.negacost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c544454454.negacostfilter,tp,LOCATION_HAND,0,1,nil) end
+	Duel.DiscardHand(tp,c544454454.negacostfilter,1,1,REASON_COST+REASON_DISCARD)
+end
+function c544454454.negaop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateAttack()
 end
