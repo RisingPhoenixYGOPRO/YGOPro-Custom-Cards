@@ -31,14 +31,14 @@ function c100000773.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c100000773.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100000773.filterb,tp,LOCATION_MZONE,0,1,nil,nil) end
-	local dam=Duel.GetMatchingGroupCount(c100000773.filterb,tp,LOCATION_MZONE,0,nil,nil)*400
+	local dam=Duel.GetMatchingGroupCount(c100000773.filterb,tp,LOCATION_MZONE,0,nil,nil)*800
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(dam)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)
 end
 function c100000773.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local d=Duel.GetMatchingGroupCount(c100000773.filterb,tp,LOCATION_MZONE,0,nil,nil)*400
+	local d=Duel.GetMatchingGroupCount(c100000773.filterb,tp,LOCATION_MZONE,0,nil,nil)*800
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function c100000773.filterb(c)
