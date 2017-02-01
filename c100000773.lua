@@ -15,15 +15,18 @@ function c100000773.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(100000773,0))
 	e2:SetCategory(CATEGORY_DAMAGE)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCondition(c100000773.atkcon)
 		e2:SetCost(c100000773.spcost)
 	e2:SetCountLimit(1,100000773+EFFECT_COUNT_CODE_OATH)
 	e2:SetTarget(c100000773.damtg)
 	e2:SetOperation(c100000773.damop)
-		e2:SetHintTiming(TIMING_STANDBY_PHASE,0)
 	c:RegisterEffect(e2)
+end
+function c100000773.atkcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()==PHASE_MAIN1
 end
 function c100000773.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
@@ -37,12 +40,26 @@ function c100000773.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)
 end
 function c100000773.damop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	if tc and tc:IsRelateToEffect(e) then end
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local d=Duel.GetMatchingGroupCount(c100000773.filterb,tp,LOCATION_MZONE,0,nil,nil)*800
 	Duel.Damage(p,d,REASON_EFFECT)
+		local e3=Effect.CreateEffect(e:GetHandler())
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetCode(EFFECT_CHANGE_DAMAGE)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetTargetRange(0,1)
+	e3:SetValue(0)
+	e3:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e3,tp)
+	local e4=e3:Clone()
+	e4:SetCode(EFFECT_NO_EFFECT_DAMAGE)
+	e4:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e4,tp)
 end
 function c100000773.filterb(c)
-	return c:IsSetCard(0x10E) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x10E) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
 end
 function c100000773.filter(c)
 	return c:IsSetCard(0x10E) and c:IsAbleToRemoveAsCost()
