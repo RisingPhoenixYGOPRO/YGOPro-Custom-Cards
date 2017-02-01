@@ -9,7 +9,6 @@ function c77777764.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetTargetRange(1,0)
-	e2:SetCondition(aux.nfbdncon)
 	e2:SetTarget(c77777764.splimit)
 	c:RegisterEffect(e2)
 	--tohand
@@ -47,8 +46,7 @@ end
 
 function c77777764.spcon2(e,c)
 	if c==nil then return true end
-	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetFieldCard(tp,LOCATION_SZONE,6):IsSetCard(0x3e7) and Duel.GetFieldCard(tp,LOCATION_SZONE,7):IsSetCard(0x3e7)
+	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and  Duel.GetFieldCard(c:GetControler(),LOCATION_SZONE,6) and Duel.GetFieldCard(c:GetControler(),LOCATION_SZONE,7) and Duel.GetFieldCard(c:GetControler(),LOCATION_SZONE,6):IsSetCard(0x3e7) and Duel.GetFieldCard(c:GetControler(),LOCATION_SZONE,7):IsSetCard(0x3e7)
 end
 function c77777764.splimit(e,c,tp,sumtp,sumpos)
 	return not c:IsRace(RACE_FIEND) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM

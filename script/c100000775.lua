@@ -36,7 +36,7 @@ function c100000775.initial_effect(c)
 	e3:SetOperation(c100000775.activate3)
 	e3:SetCondition(c100000775.descon3)
 	c:RegisterEffect(e3)
-		local e4=e3:Clone()
+	local e4=e3:Clone()
 	e4:SetCode(EVENT_FLIP_SUMMON)
 	c:RegisterEffect(e4)
 end
