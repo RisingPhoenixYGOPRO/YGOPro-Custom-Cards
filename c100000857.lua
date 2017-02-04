@@ -94,6 +94,98 @@ function c100000857.initial_effect(c)
 	e15:SetTargetRange(1,1)
 	e15:SetTarget(c100000857.spslimit)
 	c:RegisterEffect(e15)
+		--negate
+	local e16=Effect.CreateEffect(c)
+	e16:SetType(EFFECT_TYPE_FIELD)
+	e16:SetRange(LOCATION_MZONE)
+	e16:SetCode(EFFECT_CANNOT_SUMMON)
+	e16:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e16:SetTargetRange(1,1)
+	e16:SetTarget(c100000857.spslimit)
+	c:RegisterEffect(e16)
+		--disable
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetCode(EFFECT_DISABLE)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetTargetRange(LOCATION_SZONE,LOCATION_SZONE)
+	e3:SetTarget(c100000857.distgf)
+	c:RegisterEffect(e3)
+	--disable effect
+	local e17=Effect.CreateEffect(c)
+	e17:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e17:SetCode(EVENT_CHAIN_SOLVING)
+	e17:SetRange(LOCATION_MZONE)
+	e17:SetOperation(c100000857.disopf)
+	c:RegisterEffect(e17)
+	--disable trap monster
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_FIELD)
+	e4:SetCode(EFFECT_DISABLE_TRAPMONSTER)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e4:SetTarget(c100000857.distgf)
+	c:RegisterEffect(e4)
+		--disable
+	local e18=Effect.CreateEffect(c)
+	e18:SetType(EFFECT_TYPE_FIELD)
+	e18:SetCode(EFFECT_DISABLE)
+	e18:SetRange(LOCATION_MZONE)
+	e18:SetTargetRange(LOCATION_SZONE,LOCATION_SZONE)
+	e18:SetTarget(c100000857.distgz)
+	c:RegisterEffect(e18)
+	--disable effect
+	local e19=Effect.CreateEffect(c)
+	e19:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e19:SetCode(EVENT_CHAIN_SOLVING)
+	e19:SetRange(LOCATION_MZONE)
+	e19:SetOperation(c100000857.disopz)
+	c:RegisterEffect(e19)
+		--disable
+	local e23=Effect.CreateEffect(c)
+	e23:SetType(EFFECT_TYPE_FIELD)
+	e23:SetCode(EFFECT_DISABLE)
+	e23:SetRange(LOCATION_MZONE)
+	e23:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e23:SetTarget(c100000857.distgm)
+	c:RegisterEffect(e23)
+	--disable effect
+	local e24=Effect.CreateEffect(c)
+	e24:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e24:SetCode(EVENT_CHAIN_SOLVING)
+	e24:SetRange(LOCATION_MZONE)
+	e24:SetOperation(c100000857.disopm)
+	c:RegisterEffect(e24)
+end
+function c100000857.distgm(e,c)
+	return c:IsType(TYPE_MONSTER) and not c:IsSetCard(0x10D) and not c:IsImmuneToEffect(e)
+end
+function c100000857.disopm(e,tp,eg,ep,ev,re,r,rp)
+	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
+	local rc=re:GetHandler()
+	if tl==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and not rc:IsSetCard(0x10D) and not rc:IsImmuneToEffect(e) then
+		Duel.NegateEffect(ev)
+	end
+end
+function c100000857.distgz(e,c)
+	return c:IsType(TYPE_SPELL) and not c:IsSetCard(0x10D) and not c:IsImmuneToEffect(e)
+end
+function c100000857.disopz(e,tp,eg,ep,ev,re,r,rp)
+	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
+	local rc=re:GetHandler()
+	if tl==LOCATION_SZONE and re:IsActiveType(TYPE_SPELL) and not rc:IsSetCard(0x10D) and not rc:IsImmuneToEffect(e) then
+		Duel.NegateEffect(ev)
+	end
+end
+function c100000857.distgf(e,c)
+	return c:IsType(TYPE_TRAP) and not c:IsSetCard(0x10D) and not c:IsImmuneToEffect(e)
+end
+function c100000857.disopf(e,tp,eg,ep,ev,re,r,rp)
+	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
+	local rc=re:GetHandler()
+	if tl==LOCATION_SZONE and re:IsActiveType(TYPE_TRAP) and not rc:IsSetCard(0x10D) and not rc:IsImmuneToEffect(e) then
+		Duel.NegateEffect(ev)
+	end
 end
 function c100000857.descon(e,tp,eg,ep,ev,re,r,rp)
 	local t=Duel.GetAttackTarget()
