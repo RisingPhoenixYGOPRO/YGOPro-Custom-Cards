@@ -9,12 +9,7 @@ function c100000953.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(c100000953.target)
 	e1:SetOperation(c100000953.activate)
-	e1:SetCost(c100000953.cost)
 	c:RegisterEffect(e1)
-end
-function c100000953.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
 end
 function c100000953.filter(c,e,tp)
 	return c:IsSetCard(0x114) and c:GetLevel()==3 and c:IsCanBeSpecialSummoned(e,0,tp,true,false) 
