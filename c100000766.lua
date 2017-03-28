@@ -1,5 +1,13 @@
 --Created and scripted by Rising Phoenix
 function c100000766.initial_effect(c)
+c:EnableUnsummonable()
+	--control
+	local e10=Effect.CreateEffect(c)
+	e10:SetType(EFFECT_TYPE_SINGLE)
+	e10:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e10:SetRange(LOCATION_MZONE)
+	e10:SetCode(EFFECT_CANNOT_CHANGE_CONTROL)
+	c:RegisterEffect(e10)
 		--splimit
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -29,20 +37,13 @@ function c100000766.initial_effect(c)
 	e12:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
 	e12:SetTargetRange(1,0)
 	c:RegisterEffect(e12)
-	--atkup
-	local e13=Effect.CreateEffect(c)
-	e13:SetType(EFFECT_TYPE_SINGLE)
-	e13:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e13:SetRange(LOCATION_MZONE)
-	e13:SetCode(EFFECT_UPDATE_ATTACK)
-	e13:SetValue(c100000766.atkup)
-	c:RegisterEffect(e13)
-end
-function c100000766.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x11A)
-end
-function c100000766.atkup(e,c)
-	return Duel.GetMatchingGroupCount(c100000766.atkfilter,c:GetControler(),LOCATION_MZONE,0,nil)*200
+		--cannot special summon
+	local e11=Effect.CreateEffect(c)
+	e11:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e11:SetType(EFFECT_TYPE_SINGLE)
+	e11:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e11:SetValue(aux.FALSE)
+	c:RegisterEffect(e11)
 end
 function c100000766.splimit(e,c)
 	return not c:IsSetCard(0x11A)
@@ -52,14 +53,14 @@ function c100000766.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100000766.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c100000766.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) then
+	if Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+		and c:IsCanBeSpecialSummoned(e,0,tp,true,false) then
 		Duel.SendtoGrave(c,REASON_RULE)
 	end
 end
