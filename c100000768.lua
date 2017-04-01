@@ -46,7 +46,7 @@ c:EnableUnsummonable()
 	c:RegisterEffect(e5)
 		local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(100000768,4))
-	e6:SetCategory(CATEGORY_TOHAND)
+	e6:SetCategory(CATEGORY_TODECK)
 	e6:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e6:SetType(EFFECT_TYPE_IGNITION)
 	e6:SetRange(LOCATION_MZONE)
@@ -67,6 +67,8 @@ function c100000768.operation4(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then end
 		Duel.HintSelection(g)
 		Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)
+			local g=e:GetHandler():GetOverlayGroup()
+		Duel.SendtoGrave(g,REASON_EFFECT)
 end
 function c100000768.cost4(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,5,REASON_COST) end
@@ -75,6 +77,8 @@ end
 function c100000768.operation3(e,tp,eg,ep,ev,re,r,rp)
 		local g2=Duel.SelectMatchingCard(tp,c100000768.filter3,tp,0,LOCATION_ONFIELD,1,1,nil)
 		if g2:GetCount()>0 then Duel.SendtoDeck(g2,nil,2,REASON_EFFECT) end
+			local g=e:GetHandler():GetOverlayGroup()
+		Duel.SendtoGrave(g,REASON_EFFECT)
 end
 function c100000768.cost3(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,4,REASON_COST) end
