@@ -18,7 +18,7 @@ end
 function c100000987.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100000987.filter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c100000987.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.IsExistingMatchingCard(c100000985.filter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+		and Duel.IsExistingTarget(c100000987.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.IsExistingMatchingCard(c100000987.filters,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c100000987.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
@@ -26,7 +26,7 @@ function c100000987.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c100000987.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.DiscardHand(tp,c100000985.filter,1,1,REASON_EFFECT)~=0 then
+	if tc:IsRelateToEffect(e) and Duel.DiscardHand(tp,c100000987.filters,1,1,REASON_EFFECT)~=0 then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
