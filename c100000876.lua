@@ -6,7 +6,7 @@ function c100000876.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
 	e1:SetTarget(c100000876.target)
 	e1:SetOperation(c100000876.activate)
 	e1:SetCondition(c100000876.condition2)
@@ -35,6 +35,6 @@ function c100000876.spfilter2(c)
 end
 function c100000876.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c100000876.spfilter1,tp,LOCATION_REMOVED,0,5,nil)
+		and Duel.IsExistingMatchingCard(c100000876.spfilter1,tp,LOCATION_REMOVED,0,6,nil)
 		and Duel.IsExistingMatchingCard(c100000876.spfilter2,tp,LOCATION_REMOVED,0,1,nil)
 end
